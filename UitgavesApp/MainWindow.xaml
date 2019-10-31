@@ -1,0 +1,66 @@
+﻿<Window x:Class="UitgavesApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UitgavesApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="600">
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2* "/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="0.2*" />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="0.2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="0.7*"/>
+        </Grid.RowDefinitions>
+        
+        <Label Grid.Row="1" Grid.Column="1" FontSize="15" Content="Uitgegeven" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <Label Grid.Row="2" Grid.Column="1" FontSize="15" Content="Datum" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
+        <Label Grid.Row="3" Grid.Column="1" FontSize="15" Content="Categorie" VerticalAlignment="Center"  HorizontalAlignment="Center" />
+        <Label x:Name="lblAndere" Grid.Row="3" Grid.Column="4" FontSize="15" Content="Andere" Visibility="Hidden" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
+        
+        <TextBox x:Name="txtBoxUitgegeven" Grid.Row="1" Grid.Column="2" FontSize="15" Height="23" TextWrapping="Wrap" />
+        <TextBox x:Name="txtboxAndere" Grid.Row="3" Grid.Column="5" FontSize="15" Visibility="Hidden" Height="23" TextWrapping="Wrap" />
+        
+        <TextBlock x:Name="txtTotaal" Grid.Row="7" Grid.Column="1" FontSize="15" Height="23"/>
+        
+        <DatePicker x:Name="dtpDatum" Grid.Row="2" Grid.Column="2" FontSize="15" VerticalAlignment="Center" />
+
+        <ComboBox x:Name="cbxCategorie" Grid.Row="3" Grid.Column="2" FontSize="15" VerticalAlignment="Center" SelectionChanged="CbxCategorie_SelectionChanged">
+            <ComboBoxItem Content="Lidgeld" />
+            <ComboBoxItem Content="Boodschappen" />
+            <ComboBoxItem Content="Uiteten" />
+            <ComboBoxItem x:Name="cbxItemAndere" Content="Andere" />
+        </ComboBox>
+        
+        <Button x:Name="btnToevoegen" Grid.Row="5" Grid.Column="1" Foreground="White" Background="Green" FontSize="15" Content="Toevoegen" Margin="10" Click="BtnToevoegen_Click"/>
+        <Button Grid.Row="6" Grid.Column="1" FontSize="15" Content="Totaal" Foreground="White" Background="Blue" Margin="10"/>
+
+        <DataGrid x:Name="dataGrid" Grid.Row="4" Grid.Column="2" Grid.RowSpan="4" Grid.ColumnSpan="3" AutoGenerateColumns="False">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Uitgegeven" Width="*" Binding="{Binding Path=Uitgegeven}"/>
+                <DataGridTextColumn Header="Datum" Width="*" Binding="{Binding Path=Datum}" />
+                <DataGridTextColumn Header="Categorie" Width="*" Binding="{Binding Path=Categorie}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
