@@ -55,6 +55,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CategorieTotaal.cs" />
+    <Compile Include="CategorieTotaalWindow.xaml.cs">
+      <DependentUpon>CategorieTotaalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Uitgegeven.cs" />
+    <Compile Include="TotaalWindow.xaml.cs">
+      <DependentUpon>TotaalWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CategorieTotaalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MaandTotaalWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,10 +79,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MaandTotaal.cs" />
+    <Compile Include="MaandTotaalWindow.xaml.cs">
+      <DependentUpon>MaandTotaalWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="TotaalWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

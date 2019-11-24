@@ -8,13 +8,14 @@
         Title="MainWindow" Height="450" Width="600">
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.2* "/>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition Width="0.2*" />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="26*"/>
+            <ColumnDefinition Width="105*" />
+            <ColumnDefinition Width="24*"/>
+            <ColumnDefinition Width="129*" />
+            <ColumnDefinition Width="26*" />
+            <ColumnDefinition Width="129*" />
+            <ColumnDefinition Width="128*" />
+            <ColumnDefinition Width="25*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.7*"/>
@@ -27,30 +28,31 @@
             <RowDefinition/>
             <RowDefinition Height="0.7*"/>
         </Grid.RowDefinitions>
-        
+
         <Label Grid.Row="1" Grid.Column="1" FontSize="15" Content="Uitgegeven" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <Label Grid.Row="2" Grid.Column="1" FontSize="15" Content="Datum" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         <Label Grid.Row="3" Grid.Column="1" FontSize="15" Content="Categorie" VerticalAlignment="Center"  HorizontalAlignment="Center" />
-        <Label x:Name="lblAndere" Grid.Row="3" Grid.Column="4" FontSize="15" Content="Andere" Visibility="Hidden" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
-        
-        <TextBox x:Name="txtBoxUitgegeven" Grid.Row="1" Grid.Column="2" FontSize="15" Height="23" TextWrapping="Wrap" />
-        <TextBox x:Name="txtboxAndere" Grid.Row="3" Grid.Column="5" FontSize="15" Visibility="Hidden" Height="23" TextWrapping="Wrap" />
-        
-        <TextBlock x:Name="txtTotaal" Grid.Row="7" Grid.Column="1" FontSize="15" Height="23"/>
-        
-        <DatePicker x:Name="dtpDatum" Grid.Row="2" Grid.Column="2" FontSize="15" VerticalAlignment="Center" />
+        <Label x:Name="lblAndere" Grid.Row="3" Grid.Column="5" FontSize="15" Content="Andere" Visibility="Hidden" VerticalAlignment="Center"  HorizontalAlignment="Center" />
 
-        <ComboBox x:Name="cbxCategorie" Grid.Row="3" Grid.Column="2" FontSize="15" VerticalAlignment="Center" SelectionChanged="CbxCategorie_SelectionChanged">
+        <TextBox x:Name="txtBoxUitgegeven" Grid.Row="1" Grid.Column="3" FontSize="15" Height="23" TextWrapping="Wrap" Margin="0,14" />
+        <TextBox x:Name="txtboxAndere" Grid.Row="3" Grid.Column="6" FontSize="15" Visibility="Hidden" Height="23" TextWrapping="Wrap" Margin="0,14" />
+
+        <TextBlock x:Name="txtTotaal" Grid.Row="7" Grid.Column="1" FontSize="15" Height="23" Grid.ColumnSpan="2" Margin="0,14"/>
+
+        <DatePicker x:Name="dtpDatum" Grid.Row="2" Grid.Column="3" FontSize="15" VerticalAlignment="Center" Margin="0,11" />
+
+        <ComboBox x:Name="cbxCategorie" Grid.Row="3" Grid.Column="3" FontSize="15" VerticalAlignment="Center" SelectionChanged="CbxCategorie_SelectionChanged" Margin="0,12">
             <ComboBoxItem Content="Lidgeld" />
             <ComboBoxItem Content="Boodschappen" />
             <ComboBoxItem Content="Uiteten" />
             <ComboBoxItem x:Name="cbxItemAndere" Content="Andere" />
         </ComboBox>
-        
-        <Button x:Name="btnToevoegen" Grid.Row="5" Grid.Column="1" Foreground="White" Background="Green" FontSize="15" Content="Toevoegen" Margin="10" Click="BtnToevoegen_Click"/>
-        <Button Grid.Row="6" Grid.Column="1" FontSize="15" Content="Totaal" Foreground="White" Background="Blue" Margin="10"/>
 
-        <DataGrid x:Name="dataGrid" Grid.Row="4" Grid.Column="2" Grid.RowSpan="4" Grid.ColumnSpan="3" AutoGenerateColumns="False">
+        <Button x:Name="btnToevoegen" Grid.Row="5" Grid.Column="1" Foreground="White" Background="Green" FontSize="15" Content="Toevoegen" Margin="10" Click="BtnToevoegen_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnTotaal" Grid.Row="6" Grid.Column="1" Click="BtnTotaal_Click"  FontSize="15" Content="Totaal" Foreground="White" Background="Blue" Margin="10" Grid.ColumnSpan="2"/>
+
+        <DataGrid x:Name="dataGrid" Grid.Row="4" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="3" CanUserAddRows="False" IsReadOnly="True" AutoGenerateColumns="False"
+                  ItemsSource="{Binding Path=., Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
