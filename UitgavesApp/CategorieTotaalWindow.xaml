@@ -15,8 +15,8 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Categorie" Width="*" Binding="{Binding Path=Uitgegeven}"/>
-                <DataGridTextColumn Header="Totaal" Width="*" Binding="{Binding Path=Categorie}" />
+                <DataGridTextColumn Header="Categorie" Width="*" Binding="{Binding Path=Categorie}"/>
+                <DataGridTextColumn Header="Totaal" Width="*" Binding="{Binding Path=Totaal, StringFormat=c, ConverterCulture='nl-NL'}" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

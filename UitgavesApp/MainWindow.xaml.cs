@@ -25,7 +25,7 @@ namespace UitgavesApp
 
         private void CbxCategorie_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if(cbxCategorie.SelectedItem == cbxItemAndere)
+            if (cbxCategorie.SelectedItem == cbxItemAndere)
             {
                 txtboxAndere.Visibility = Visibility.Visible;
                 lblAndere.Visibility = Visibility.Visible;
@@ -39,11 +39,31 @@ namespace UitgavesApp
 
         private void BtnToevoegen_Click(object sender, RoutedEventArgs e)
         {
+            var selectedCategorie = ((ComboBoxItem)cbxCategorie.SelectedValue).Content.ToString();
+            string categorieNaam;
+
+            if (selectedCategorie.Equals("Andere"))
+            {
+                if (string.IsNullOrEmpty(txtboxAndere.Text))
+                {
+                    MessageBox.Show("Gelieve een categorienaam in te geven.");
+                    return;
+                }
+                else
+                {
+                    categorieNaam = txtboxAndere.Text;
+                }
+            }
+            else
+            {
+                categorieNaam = ((ComboBoxItem)cbxCategorie.SelectedItem).Content.ToString();
+            }
+
             _uitgaves.Add(new UitgaveItem
             {
                 Uitgegeven = Convert.ToDouble(txtBoxUitgegeven.Text),
                 Datum = dtpDatum.SelectedDate.GetValueOrDefault().ToString("dd MMMM yyyy"),
-                Categorie = ((ComboBoxItem)cbxCategorie.SelectedItem).Content.ToString()
+                Categorie = categorieNaam
             });
         }
 
@@ -56,31 +76,73 @@ namespace UitgavesApp
 
         private void BtnTotaal_Click(object sender, RoutedEventArgs e)
         {
-            new TotaalWindow(GetMaandTotalen()).Show();
+            new TotaalWindow(GetMaandJaarTotalen(), GetCategorieTotalen()).Show();
         }
 
-        private List<MaandTotaal> GetMaandTotalen()
+        private List<MaandJaarTotaal> GetMaandJaarTotalen()
         {
-            var maandTotalen = new List<MaandTotaal>();
+            var maandJaarTotalen = new List<MaandJaarTotaal>();
             var uitgaveItemList = ConverteerItemsNaarUitgaveItems(dataGrid.Items);
-            var uitgaveList = ConverteerUitgaveItemsNaarUitgaves(uitgaveItemList);
+            var maandJaarUitgegevenList = ConverteerUitgaveItemsNaarMaandJaarUitgegeven(uitgaveItemList);
             for (int maand = 1; maand <= 12; maand = maand + 1)
             {
                 var maandNaam = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(maand);
-                var maandTotaal = new MaandTotaal
+                var jaarUitgegeven = maandJaarUitgegevenList.GroupBy(l => l.Jaar).ToList();
+                var maandUitgegevenListHuidigeMaand = maandJaarUitgegevenList.Where(uitgave => uitgave.Maand.Equals(maandNaam));
+                var somUitgegevenHuidigeMaand = maandUitgegevenListHuidigeMaand.Sum(uitgave => uitgave.Uitgegeven);
+
+                foreach(var jaar in jaarUitgegeven)
                 {
-                    Maand = maandNaam,
-                    Totaal = uitgaveList.Where(uitgave => uitgave.Maand.Equals(maandNaam)).Sum(uitgave => uitgave.Uitgegeven).ToString("C", CultureInfo.CreateSpecificCulture("nl"))
-                };
-                maandTotalen.Add(maandTotaal);
+                    var maandTotaal = new MaandJaarTotaal
+                    {
+                        Maand = maandNaam,
+                        Jaar = jaar.Key,
+                        Totaal = somUitgegevenHuidigeMaand
+                    };
+                    maandJaarTotalen.Add(maandTotaal);
+                }
             }
-            return maandTotalen;
+            return maandJaarTotalen;
         }
 
         private List<CategorieTotaal> GetCategorieTotalen()
         {
             var categorieTotalen = new List<CategorieTotaal>();
-            return null;
+            var uitgaveItemList = ConverteerItemsNaarUitgaveItems(dataGrid.Items);
+            var categorieUitgegevenList = ConverteerUitgaveItemsNaarCategorieUitgegeven(uitgaveItemList);
+
+            var categorieen = dataGrid.Items.OfType<UitgaveItem>().Select(uitgaveItem => uitgaveItem.Categorie).Distinct().ToList();
+
+            for (int categorie = 1; categorie <= categorieen.Count; categorie = categorie + 1)
+            {
+                var categorieNaam = categorieen[categorie - 1];
+                var categorieUitgegevenListHuidigeCategorie = categorieUitgegevenList.Where(cu => cu.Categorie.Equals(categorieNaam));
+                var somUitgegevenHuidigeCategorie = categorieUitgegevenListHuidigeCategorie.Sum(cu => cu.Uitgegeven);
+
+                var categorieTotaal = new CategorieTotaal
+                {
+                    Categorie = categorieNaam,
+                    Totaal = somUitgegevenHuidigeCategorie
+                };
+                categorieTotalen.Add(categorieTotaal);
+            }
+            return categorieTotalen;
+        }
+
+        private List<CategorieUitgegeven> ConverteerUitgaveItemsNaarCategorieUitgegeven(List<UitgaveItem> uitgaveItems)
+        {
+            var categorieUitgegevenList = new List<CategorieUitgegeven>();
+            foreach (var uitgaveItem in uitgaveItems)
+            {
+                var categorie = uitgaveItem.Categorie;
+                var categorieUitgegeven = new CategorieUitgegeven
+                {
+                    Categorie = categorie,
+                    Uitgegeven = uitgaveItem.Uitgegeven
+                };
+                categorieUitgegevenList.Add(categorieUitgegeven);
+            }
+            return categorieUitgegevenList;
         }
 
         private List<UitgaveItem> ConverteerItemsNaarUitgaveItems(ItemCollection datagridItems)
@@ -88,21 +150,22 @@ namespace UitgavesApp
             return datagridItems.OfType<UitgaveItem>().ToList();
         }
 
-        private List<Uitgave> ConverteerUitgaveItemsNaarUitgaves(List<UitgaveItem> uitgaveItems)
+        private List<MaandJaarUitgegeven> ConverteerUitgaveItemsNaarMaandJaarUitgegeven(List<UitgaveItem> uitgaveItems)
         {
-            var uitgaveList = new List<Uitgave>();
+            var maandUitgegevenList = new List<MaandJaarUitgegeven>();
             foreach (var uitgaveItem in uitgaveItems)
             {
-                var maand = DateTime.ParseExact(uitgaveItem.Datum, "dd MMMM yyyy", null).Month;
-                var maandNaam = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(maand);
-                var uitgave = new Uitgave
+                var datetime = DateTime.ParseExact(uitgaveItem.Datum, "dd MMMM yyyy", null);
+                var maandNaam = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(datetime.Month);
+                var maandJaarUitgegeven = new MaandJaarUitgegeven
                 {
                     Maand = maandNaam,
+                    Jaar = datetime.Year,
                     Uitgegeven = uitgaveItem.Uitgegeven
                 };
-                uitgaveList.Add(uitgave);
+                maandUitgegevenList.Add(maandJaarUitgegeven);
             }
-            return uitgaveList;
+            return maandUitgegevenList;
         }
     }
 }

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MaandTotaalWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="dataGrid" Grid.Row="4" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="3" CanUserAddRows="False" IsReadOnly="True" AutoGenerateColumns="False"
+        <DataGrid x:Name="dataGrid" Grid.Row="4" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="3" Height="300" VerticalAlignment="Top" CanUserAddRows="False" IsReadOnly="True" AutoGenerateColumns="False"
                   ItemsSource="{Binding Path=., Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -16,9 +16,10 @@
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Maand" Width="*" Binding="{Binding Path=Maand}"/>
-                <DataGridTextColumn Header="Totaal" Width="*" Binding="{Binding Path=Totaal}" />
+                <DataGridTextColumn Header="Totaal" Width="*" Binding="{Binding Path=Totaal, StringFormat=c, ConverterCulture='nl-NL'}" />
             </DataGrid.Columns>
         </DataGrid>
-
+        <TextBlock HorizontalAlignment="Left" Margin="115,345,0,0" TextWrapping="Wrap" Text="Selecteer een jaar waarvan je de totalen wilt zien" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbxJaren" HorizontalAlignment="Left" Margin="440,345,0,0" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>

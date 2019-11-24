@@ -59,7 +59,8 @@
     <Compile Include="CategorieTotaalWindow.xaml.cs">
       <DependentUpon>CategorieTotaalWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Uitgegeven.cs" />
+    <Compile Include="CategorieUitgegeven.cs" />
+    <Compile Include="MaandJaarUitgegeven.cs" />
     <Compile Include="TotaalWindow.xaml.cs">
       <DependentUpon>TotaalWindow.xaml</DependentUpon>
     </Compile>
@@ -79,7 +80,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MaandTotaal.cs" />
+    <Compile Include="MaandJaarTotaal.cs" />
     <Compile Include="MaandTotaalWindow.xaml.cs">
       <DependentUpon>MaandTotaalWindow.xaml</DependentUpon>
     </Compile>

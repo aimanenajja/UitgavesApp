@@ -1,8 +1,8 @@
 ﻿namespace UitgavesApp
 {
-    public class CategorieTotaal
+    public class CategorieUitgegeven
     {
         public string Categorie { get; set; }
-        public double Totaal { get; set; }
+        public double Uitgegeven { get; set; }
     }
 }

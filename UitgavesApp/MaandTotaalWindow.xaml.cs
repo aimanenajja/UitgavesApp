@@ -20,12 +20,13 @@ namespace UitgavesApp
     /// </summary>
     public partial class MaandTotaalWindow : Window
     {
-        public MaandTotaalWindow(List<MaandTotaal> maandTotalen)
+        public MaandTotaalWindow(List<MaandJaarTotaal> maandJaarTotalen)
         {
             InitializeComponent();
-            dataGrid.ItemsSource = maandTotalen;
+            cbxJaren.ItemsSource = maandJaarTotalen.Select(mjt => mjt.Jaar).Distinct();
+            cbxJaren.SelectedIndex = 0;
+            dataGrid.ItemsSource = maandJaarTotalen.Where(mjt => mjt.Jaar == (int) cbxJaren.SelectedItem);
         }
 
-      
     }
 }

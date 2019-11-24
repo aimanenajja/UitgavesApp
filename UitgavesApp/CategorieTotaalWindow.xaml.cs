@@ -19,9 +19,10 @@ namespace UitgavesApp
     /// </summary>
     public partial class CategorieTotaalWindow : Window
     {
-        public CategorieTotaalWindow()
+        public CategorieTotaalWindow(List<CategorieTotaal> categorieTotalen)
         {
             InitializeComponent();
+            dataGrid.ItemsSource = categorieTotalen;
         }
     }
 }

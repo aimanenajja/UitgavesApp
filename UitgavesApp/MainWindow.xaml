@@ -37,14 +37,12 @@
         <TextBox x:Name="txtBoxUitgegeven" Grid.Row="1" Grid.Column="3" FontSize="15" Height="23" TextWrapping="Wrap" Margin="0,14" />
         <TextBox x:Name="txtboxAndere" Grid.Row="3" Grid.Column="6" FontSize="15" Visibility="Hidden" Height="23" TextWrapping="Wrap" Margin="0,14" />
 
-        <TextBlock x:Name="txtTotaal" Grid.Row="7" Grid.Column="1" FontSize="15" Height="23" Grid.ColumnSpan="2" Margin="0,14"/>
-
         <DatePicker x:Name="dtpDatum" Grid.Row="2" Grid.Column="3" FontSize="15" VerticalAlignment="Center" Margin="0,11" />
 
         <ComboBox x:Name="cbxCategorie" Grid.Row="3" Grid.Column="3" FontSize="15" VerticalAlignment="Center" SelectionChanged="CbxCategorie_SelectionChanged" Margin="0,12">
-            <ComboBoxItem Content="Lidgeld" />
-            <ComboBoxItem Content="Boodschappen" />
-            <ComboBoxItem Content="Uiteten" />
+            <ComboBoxItem x:Name="cbxItemLidgeld" Content="Lidgeld" />
+            <ComboBoxItem x:Name="cbxItemBoodschappen" Content="Boodschappen" />
+            <ComboBoxItem x:Name="cbxItemUiteten" Content="Uiteten" />
             <ComboBoxItem x:Name="cbxItemAndere" Content="Andere" />
         </ComboBox>
 
@@ -59,7 +57,7 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Uitgegeven" Width="*" Binding="{Binding Path=Uitgegeven}"/>
+                <DataGridTextColumn Header="Uitgegeven" Width="*" Binding="{Binding Path=Uitgegeven, StringFormat=c, ConverterCulture='nl-NL'}"/>
                 <DataGridTextColumn Header="Datum" Width="*" Binding="{Binding Path=Datum}" />
                 <DataGridTextColumn Header="Categorie" Width="*" Binding="{Binding Path=Categorie}" />
             </DataGrid.Columns>
