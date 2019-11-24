@@ -89,10 +89,11 @@ namespace UitgavesApp
                 var maandNaam = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(maand);
                 var jaarUitgegeven = maandJaarUitgegevenList.GroupBy(l => l.Jaar).ToList();
                 var maandUitgegevenListHuidigeMaand = maandJaarUitgegevenList.Where(uitgave => uitgave.Maand.Equals(maandNaam));
-                var somUitgegevenHuidigeMaand = maandUitgegevenListHuidigeMaand.Sum(uitgave => uitgave.Uitgegeven);
 
                 foreach(var jaar in jaarUitgegeven)
                 {
+                    var maandJaarUitgegevenHuidigJaar = maandUitgegevenListHuidigeMaand.Where(mju => mju.Jaar == jaar.Key);
+                    var somUitgegevenHuidigeMaand = maandJaarUitgegevenHuidigJaar.Sum(uitgave => uitgave.Uitgegeven);
                     var maandTotaal = new MaandJaarTotaal
                     {
                         Maand = maandNaam,

@@ -20,6 +20,6 @@
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock HorizontalAlignment="Left" Margin="115,345,0,0" TextWrapping="Wrap" Text="Selecteer een jaar waarvan je de totalen wilt zien" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbxJaren" HorizontalAlignment="Left" Margin="440,345,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cbxJaren" HorizontalAlignment="Left" Margin="440,345,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CbxJaren_SelectionChanged" />
     </Grid>
 </Window>

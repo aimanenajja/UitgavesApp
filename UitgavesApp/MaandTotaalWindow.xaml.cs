@@ -20,13 +20,20 @@ namespace UitgavesApp
     /// </summary>
     public partial class MaandTotaalWindow : Window
     {
+        private readonly ObservableCollection<MaandJaarTotaal> _maandJaarTotalen;
+
         public MaandTotaalWindow(List<MaandJaarTotaal> maandJaarTotalen)
         {
             InitializeComponent();
-            cbxJaren.ItemsSource = maandJaarTotalen.Select(mjt => mjt.Jaar).Distinct();
+            _maandJaarTotalen = new ObservableCollection<MaandJaarTotaal>(maandJaarTotalen);
+            cbxJaren.ItemsSource = _maandJaarTotalen.Select(mjt => mjt.Jaar).Distinct().OrderBy(mjt => mjt);
             cbxJaren.SelectedIndex = 0;
-            dataGrid.ItemsSource = maandJaarTotalen.Where(mjt => mjt.Jaar == (int) cbxJaren.SelectedItem);
+            dataGrid.ItemsSource = _maandJaarTotalen.Where(mjt => mjt.Jaar == (int) cbxJaren.SelectedItem);
         }
 
+        private void CbxJaren_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            dataGrid.ItemsSource = _maandJaarTotalen.Where(mjt => mjt.Jaar == (int)cbxJaren.SelectedItem);
+        }
     }
 }
